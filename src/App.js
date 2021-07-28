@@ -12,16 +12,11 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     const [message, setMessage] = useState('')
     const refContainer = useRef(null)
-    // refContainer.current.addEventListener('click', ()=> {
-    //     setMessage(false)
-    // })
-    async function getFetch() {
 
+    async function getFetch() {
         setIsLoading(true)
         let arr = []
-        console.log(refContainer.current)
         if (query[0]==='delay') {
-
             console.log('delay')
             for (let i = 0; i < 5; i++) {
                     const response = await fetch('https://api.giphy.com/v1/gifs/random?api_key=W3af1n8HdTxy4KrXCvIHfPMjNeP9VFV6&tag=&rating=g')
@@ -31,17 +26,15 @@ function App() {
                         photo: data.data.image_url,
                         time: new Date()
                     })
-                let stop = 0
-               const int = setInterval(()=> {
-                    console.log(stop)
-                },5000)
-                if (stop === 5) {
-                    clearInterval(int)
-                }
             }
+            (function fiveSeconds (n) {
 
+                setImg(prevState => [...prevState, arr[n]])
+                console.log(n++)
 
+                if (n < 5) setTimeout( fiveSeconds, 1000, n ); // Redo if n <= 5 (and pass n)
 
+            } (0))
             setIsLoading(false)
             return
         }
